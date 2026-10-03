@@ -1,0 +1,97 @@
+STEP 1 → Database schema
+STEP 2 → Express + MySQL
+STEP 3 → Register/Login
+STEP 4 → JWT + roles
+STEP 5 → Store APIs
+STEP 6 → Rating APIs
+STEP 7 → React authentication
+STEP 8 → User dashboard
+STEP 9 → Admin dashboard
+STEP 10 → Owner dashboard
+STEP 11 → Search/filter/sort
+STEP 12 → Validation + testing
+STEP 13 → README
+
+--------------------------------------------------------------
+
+Assignment requirement checklist
+Use this as your final checklist.
+Authentication
+- [ ] Login
+- [ ] Registration
+- [ ] JWT
+- [ ] Password hashing
+- [ ] Logout
+- [ ] Change password
+Admin
+- [ ] Add store
+- [ ] Add normal user
+- [ ] Add admin user
+- [ ] Total users
+- [ ] Total stores
+- [ ] Total ratings
+- [ ] Store list
+- [ ] User list
+- [ ] Search/filter
+- [ ] Sorting
+- [ ] User details
+Normal User
+- [ ] Register
+- [ ] Login
+- [ ] Change password
+- [ ] Store list
+- [ ] Search by name
+- [ ] Search by address
+- [ ] Overall rating
+- [ ] Own rating
+- [ ] Submit rating
+- [ ] Modify rating
+- [ ] Logout
+Store Owner
+- [ ] Login
+- [ ] Change password
+- [ ] Average rating
+- [ ] Users who rated
+- [ ] Logout
+Validation
+- [ ] Name 20–60 chars
+- [ ] Address ≤400 chars
+- [ ] Password 8–16 chars
+- [ ] Uppercase password
+- [ ] Special character
+- [ ] Email validation
+- [ ] Rating 1–5
+These validation requirements come directly from the assignment.
+
+------------------------------------------------------------------------------
+
+** Backend Development **
+These will handle:
+- Express → backend/API
+- mysql2 → MySQL connection
+- dotenv → environment variables
+- cors → frontend-backend communication
+- bcryptjs → password hashing
+- jsonwebtoken → login authentication/JWT
+- nodemon → automatically restart server
+
+----------------------------------------------------------------------------
+
+**  STEP 4  **
+Register
+   ↓
+Validate input
+   ↓
+Hash password with bcrypt
+   ↓
+Save user in MySQL
+   ↓
+Login
+   ↓
+Verify password
+   ↓
+Generate JWT
+   ↓
+Identify role
+   ↓
+Admin / User / Owner Dashboard
