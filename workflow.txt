@@ -1,0 +1,21 @@
+User logs in
+     ↓
+JWT saved in localStorage
+     ↓
+User redirected to /user
+     ↓
+UserDashboard loads
+     ↓
+GET /api/stores
+     ↓
+JWT automatically attached
+     ↓
+Express authenticate()
+     ↓
+authorize("user")
+     ↓
+MySQL
+     ↓
+Stores returned
+     ↓
+React displays stores

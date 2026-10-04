@@ -2,7 +2,7 @@
 Developed a full-stack Store Rating Management System using React.js, Express.js, and MySQL.   Implemented role-based access for Admin, Store Owner, and Users with store and rating management.   Users can rate stores, while owners and admins can monitor and manage ratings through dashboards.
 # Store Rating Management System
 
-A full-stack web application for managing stores, users, and customer ratings through a centralized platform.
+A full-stack Web application for managing stores, users, and customer ratings through a centralized platform.
 
 ## Tech Stack
 
