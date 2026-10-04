@@ -28,6 +28,9 @@ const authenticate = (req, res, next) => {
 
 const authorize = (...allowedRoles) => {
   return (req, res, next) => {
+    console.log("ROLE FROM JWT:", req.user?.role);
+    console.log("ALLOWED ROLES:", allowedRoles);
+
     if (!req.user || !allowedRoles.includes(req.user.role)) {
       return res.status(403).json({
         success: false,

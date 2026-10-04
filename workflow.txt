@@ -1,21 +1,363 @@
-User logs in
-     ↓
-JWT saved in localStorage
-     ↓
-User redirected to /user
-     ↓
-UserDashboard loads
-     ↓
-GET /api/stores
-     ↓
-JWT automatically attached
-     ↓
-Express authenticate()
-     ↓
-authorize("user")
-     ↓
-MySQL
-     ↓
-Stores returned
-     ↓
-React displays stores
+STORE RATING MANAGEMENT SYSTEM
+APPLICATION WORKFLOW
+
+1. APPLICATION START
+--------------------
+User opens the Store Rating Management System.
+
+The frontend loads the React application and provides options for:
+- Login
+- Registration
+
+The user selects the appropriate option.
+
+
+2. USER REGISTRATION
+--------------------
+1. User opens the registration page.
+2. User enters:
+   - Name
+   - Email
+   - Password
+   - Address
+   - Role (where applicable)
+3. Frontend validates the input.
+4. Registration data is sent to the backend.
+5. Backend validates the data.
+6. Password is securely hashed.
+7. User information is stored in the users table.
+8. Registration is completed successfully.
+9. User can proceed to login.
+
+
+3. USER LOGIN
+-------------
+1. User enters email and password.
+2. Frontend sends login credentials to the backend.
+3. Backend searches for the user in the database.
+4. Password is verified.
+5. User role is identified.
+6. Backend generates a JWT authentication token.
+7. Token is returned to the frontend.
+8. User is redirected to the dashboard according to their role.
+
+Role-based redirection:
+
+Admin  → Admin Dashboard
+Owner  → Owner Dashboard
+User   → User Dashboard
+
+
+4. AUTHENTICATION WORKFLOW
+--------------------------
+For every protected request:
+
+Frontend
+   ↓
+JWT Token
+   ↓
+Express Backend
+   ↓
+Authentication Middleware
+   ↓
+Token Verification
+   ↓
+User Identity Retrieved
+   ↓
+Authorization Middleware
+   ↓
+Requested Controller
+   ↓
+Database
+   ↓
+Response
+
+
+5. ADMIN WORKFLOW
+-----------------
+After successful admin login:
+
+Admin
+  ↓
+Admin Dashboard
+  ↓
+Manage Users / Manage Stores / View Information
+
+USER MANAGEMENT:
+
+1. Admin opens user management.
+2. Backend retrieves user information.
+3. Users are displayed.
+4. Admin can view user details.
+5. Admin can manage users according to the available functionality.
+
+STORE MANAGEMENT:
+
+1. Admin opens store management.
+2. Admin enters store details.
+3. Admin selects/assigns a store owner.
+4. Backend validates the information.
+5. Store is saved in the stores table.
+6. Store becomes available in the system.
+
+Admin can also view existing stores and their associated owners.
+
+
+6. STORE OWNER WORKFLOW
+-----------------------
+1. Store owner logs into the application.
+2. Backend verifies the JWT token.
+3. Role authorization confirms the user is an owner.
+4. Owner is redirected to the Owner Dashboard.
+5. Owner views their assigned store.
+6. Owner can view ratings submitted by users.
+7. Owner can view the average rating of the store.
+8. Owner can monitor customer feedback/rating information.
+
+
+7. NORMAL USER WORKFLOW
+-----------------------
+1. User logs into the application.
+2. User is redirected to the User Dashboard.
+3. User views available stores.
+4. User selects a store.
+5. Store details and rating information are displayed.
+6. User chooses a rating between 1 and 5.
+7. User submits the rating.
+8. Backend validates the rating.
+9. Rating is stored in the ratings table.
+10. Updated rating information is displayed.
+
+
+8. RATING WORKFLOW
+------------------
+USER
+  ↓
+Select Store
+  ↓
+View Store Details
+  ↓
+Enter Rating (1-5)
+  ↓
+Submit Rating
+  ↓
+Frontend Validation
+  ↓
+Backend API
+  ↓
+Authentication
+  ↓
+Authorization
+  ↓
+Rating Validation
+  ↓
+Check Existing Rating
+  ↓
+Create / Update Rating
+  ↓
+MySQL Database
+  ↓
+Calculate/Fetch Rating Information
+  ↓
+Return Response
+  ↓
+Display Result
+
+
+9. UPDATE RATING WORKFLOW
+-------------------------
+1. User selects a store that they have already rated.
+2. System checks the existing rating.
+3. Existing rating is displayed.
+4. User selects a new rating from 1 to 5.
+5. User submits the updated rating.
+6. Backend verifies the user's ownership of the rating.
+7. Existing rating is updated.
+8. Updated rating information is returned to the frontend.
+
+
+10. DATABASE WORKFLOW
+---------------------
+The application uses three primary tables:
+
+USERS
+  ↓
+Stores account and role information
+
+STORES
+  ↓
+Stores store information and owner relationship
+
+RATINGS
+  ↓
+Stores user ratings and store relationships
+
+
+Database relationships:
+
+users.id
+   │
+   ├──────────────→ stores.owner_id
+   │
+   └──────────────→ ratings.user_id
+
+stores.id
+   └──────────────→ ratings.store_id
+
+
+11. API WORKFLOW
+----------------
+Frontend sends an HTTP request
+        ↓
+Express Router receives request
+        ↓
+Authentication Middleware
+        ↓
+Authorization Middleware
+        ↓
+Controller
+        ↓
+MySQL Query
+        ↓
+Database
+        ↓
+Controller processes result
+        ↓
+JSON Response
+        ↓
+Frontend updates the UI
+
+
+12. ERROR HANDLING WORKFLOW
+---------------------------
+If an error occurs:
+
+User Request
+    ↓
+Backend Validation
+    ↓
+Error Detected?
+    ↓
+YES
+    ↓
+Return appropriate HTTP status
+    ↓
+Return error message
+    ↓
+Frontend displays error
+
+Common errors include:
+- Invalid credentials
+- Email already registered
+- Unauthorized access
+- Store not found
+- Rating outside 1-5
+- Duplicate rating
+- Missing required fields
+- Database errors
+
+
+13. LOGOUT WORKFLOW
+-------------------
+1. User clicks Logout.
+2. Authentication information/token is removed from the frontend.
+3. User session is ended.
+4. User is redirected to the Login page.
+5. Protected pages can no longer be accessed without authentication.
+
+
+14. COMPLETE SYSTEM WORKFLOW
+----------------------------
+
+                    START
+                      │
+                      ▼
+               Open Application
+                      │
+                      ▼
+             Login / Registration
+                 │          │
+                 │          ▼
+                 │     Registration
+                 │          │
+                 │          ▼
+                 │       Login
+                 │          │
+                 └─────┬────┘
+                       ▼
+                Authenticate User
+                       │
+                       ▼
+                 Identify Role
+                       │
+          ┌────────────┼────────────┐
+          ▼            ▼            ▼
+        ADMIN        OWNER         USER
+          │            │            │
+          ▼            ▼            ▼
+       Admin         Owner         User
+      Dashboard     Dashboard     Dashboard
+          │            │            │
+          ▼            ▼            ▼
+       Manage        View Store    View Stores
+       Users         Ratings          │
+          │            │              ▼
+          ▼            ▼          Select Store
+       Manage        View Avg.        │
+       Stores        Rating           ▼
+          │                         Submit/
+          │                         Update
+          │                         Rating
+          │                            │
+          └────────────┬───────────────┘
+                       ▼
+                  MySQL Database
+                       │
+                       ▼
+                  Return Response
+                       │
+                       ▼
+                  Update UI
+                       │
+                       ▼
+                     END
+
+
+15. SECURITY WORKFLOW
+---------------------
+Every protected operation follows:
+
+Request
+  ↓
+Check JWT
+  ↓
+Verify Token
+  ↓
+Identify User
+  ↓
+Check User Role
+  ↓
+Allow / Deny Request
+  ↓
+Execute Operation
+
+
+Unauthorized users receive an appropriate authorization error and cannot access restricted functionality.
+
+
+16. FINAL APPLICATION FLOW
+--------------------------
+The complete application follows this sequence:
+
+1. User opens the application.
+2. User registers or logs in.
+3. Backend authenticates the user.
+4. JWT token is generated.
+5. User is redirected according to their role.
+6. User accesses permitted features.
+7. Frontend communicates with backend using REST APIs.
+8. Backend validates requests and communicates with MySQL.
+9. Database stores and retrieves application data.
+10. Backend returns the result to the frontend.
+11. Frontend displays the updated information.
+12. User can logout when finished.

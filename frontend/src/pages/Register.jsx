@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../services/api";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import api from "../services/api";
 
-const Register = () => {
+function Register() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -13,10 +13,9 @@ const Register = () => {
     address: "",
   });
 
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -29,20 +28,15 @@ const Register = () => {
     e.preventDefault();
 
     setError("");
-    setSuccess("");
     setLoading(true);
 
     try {
       await api.post("/auth/register", formData);
 
-      setSuccess("Account created successfully. Redirecting to login...");
-
-      setTimeout(() => {
-        navigate("/login");
-      }, 1500);
-    } catch (error) {
+      navigate("/login");
+    } catch (err) {
       setError(
-        error.response?.data?.message ||
+        err.response?.data?.message ||
           "Registration failed. Please try again."
       );
     } finally {
@@ -51,274 +45,274 @@ const Register = () => {
   };
 
   return (
-    <div className="login-page">
+    <div className="page auth-page">
 
-      {/* Left Branding Section */}
-      <div className="login-brand">
-        <div className="brand-content">
-        <div>
-          <div className="logo-mark">
-            <img src={logo} alt="StoreRate Logo" />
-          </div>
-          <h1>
-            Join Store Rating
-            <span>Management System</span>
-          </h1>
-        </div>
-          
+      <div className="auth-container">
 
-          <p>
-            Create your account and become part of a community
-            that helps people discover better stores.
-          </p>
+        {/* LEFT PANEL */}
+        <section className="auth-info">
 
-          <div className="brand-features">
+          <Link to="/" className="auth-brand">
 
-            <div className="brand-feature">
-              <span>01</span>
-              <div>
-                <strong>Discover Stores</strong>
-                <p>
-                  Explore stores and find the best-rated places.
-                </p>
-              </div>
-            </div>
+            <img
+              src={logo}
+              alt="Store Rating Management System"
+              className="auth-brand-logo"
+            />
 
-            <div className="brand-feature">
-              <span>02</span>
-              <div>
-                <strong>Rate Your Experience</strong>
-                <p>
-                  Share your experience by rating stores.
-                </p>
-              </div>
-            </div>
+            <span>
+              Store Rating Management System
+            </span>
 
-            <div className="brand-feature">
-              <span>03</span>
-              <div>
-                <strong>Help Others</strong>
-                <p>
-                  Your ratings help others make better decisions.
-                </p>
-              </div>
-            </div>
+          </Link>
 
-          </div>
-        </div>
-      </div>
+          <div className="auth-info-content">
 
-      {/* Register Section */}
-      <div className="login-form-section">
+            <span className="auth-eyebrow">
+              JOIN OUR COMMUNITY
+            </span>
 
-        <div className="login-card">
+            <h1 className="auth-info-title">
+              Join Store Rating
+              <br />
+              Management System
+            </h1>
 
-          <div className="mobile-logo">
-            SR
-          </div>
-
-          <div className="login-header">
-
-            <p className="welcome-text">
-              GET STARTED
+            <p className="auth-info-description">
+              Create your account and become part of a community
+              that helps people discover better stores.
             </p>
 
-            <h2>
+            <div className="auth-features">
+
+              <div className="auth-feature">
+
+                <span className="auth-feature-number">
+                  01
+                </span>
+
+                <div>
+                  <h3>Discover Stores</h3>
+
+                  <p>
+                    Explore stores and find the best-rated places.
+                  </p>
+                </div>
+
+              </div>
+
+              <div className="auth-feature">
+
+                <span className="auth-feature-number">
+                  02
+                </span>
+
+                <div>
+                  <h3>Rate Your Experience</h3>
+
+                  <p>
+                    Share your experience by rating stores.
+                  </p>
+                </div>
+
+              </div>
+
+              <div className="auth-feature">
+
+                <span className="auth-feature-number">
+                  03
+                </span>
+
+                <div>
+                  <h3>Help Others</h3>
+
+                  <p>
+                    Your ratings help others make better decisions.
+                  </p>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* FORM PANEL */}
+        <section className="auth-form-section">
+
+          <div className="auth-form-wrapper">
+
+            <span className="auth-eyebrow">
+              GET STARTED
+            </span>
+
+            <h2 className="auth-form-title">
               Create your account
             </h2>
 
-            <p>
+            <p className="auth-form-description">
               Fill in your details to get started.
             </p>
 
-          </div>
+            {error && (
+              <div className="form-alert form-alert-error">
+                {error}
+              </div>
+            )}
 
-          {error && (
-            <div className="login-error">
-              <span>!</span>
-              {error}
-            </div>
-          )}
+            <form
+              className="auth-form"
+              onSubmit={handleSubmit}
+            >
 
-          {success && (
-            <div className="register-success">
-              {success}
-            </div>
-          )}
+              {/* NAME */}
+              <div className="form-field">
 
-          <form onSubmit={handleSubmit}>
-
-            {/* Name */}
-            <div className="login-field">
-
-              <label htmlFor="name">
-                Full Name
-              </label>
-
-              <div className="input-wrapper">
-
-                <span className="input-icon">
-                  A
-                </span>
+                <label htmlFor="name">
+                  Full Name
+                </label>
 
                 <input
                   id="name"
                   type="text"
                   name="name"
-                  placeholder="Enter your full name"
                   value={formData.name}
                   onChange={handleChange}
-                  required
+                  placeholder="Enter your full name"
+                  autoComplete="name"
                   minLength={20}
                   maxLength={60}
+                  required
                 />
 
               </div>
 
-            </div>
+              {/* EMAIL */}
+              <div className="form-field">
 
-            {/* Email */}
-            <div className="login-field">
-
-              <label htmlFor="email">
-                Email Address
-              </label>
-
-              <div className="input-wrapper">
-
-                <span className="input-icon">
-                  @
-                </span>
+                <label htmlFor="email">
+                  Email Address
+                </label>
 
                 <input
                   id="email"
                   type="email"
                   name="email"
-                  placeholder="you@example.com"
                   value={formData.email}
                   onChange={handleChange}
+                  placeholder="you@example.com"
+                  autoComplete="email"
                   required
                 />
 
               </div>
 
-            </div>
+              {/* PASSWORD */}
+              <div className="form-field">
 
-            {/* Password */}
-            <div className="login-field">
+                <label htmlFor="password">
+                  Password
+                </label>
 
-              <label htmlFor="password">
-                Password
-              </label>
+                <div className="password-wrapper">
 
-              <div className="input-wrapper">
+                  <input
+                    id="password"
+                    type={
+                      showPassword
+                        ? "text"
+                        : "password"
+                    }
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Create a strong password"
+                    autoComplete="new-password"
+                    minLength={8}
+                    maxLength={16}
+                    required
+                  />
 
-                <span className="input-icon">
-                  *
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() =>
+                      setShowPassword(!showPassword)
+                    }
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+
+                </div>
+
+                <span className="form-help">
+                  8–16 characters, including one uppercase
+                  letter and one special character.
                 </span>
-
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="Create a strong password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  minLength={8}
-                  maxLength={16}
-                />
-
-                <button
-                  type="button"
-                  className="show-password"
-                  onClick={() =>
-                    setShowPassword(!showPassword)
-                  }
-                >
-                  {showPassword ? "Hide" : "Show"}
-                </button>
 
               </div>
 
-              <small className="password-hint">
-                8–16 characters, including one uppercase letter
-                and one special character.
-              </small>
+              {/* ADDRESS */}
+              <div className="form-field">
 
-            </div>
-
-            {/* Address */}
-            <div className="login-field">
-
-              <label htmlFor="address">
-                Address
-              </label>
-
-              <div className="input-wrapper">
-
-                <span className="input-icon address-icon">
-                  #
-                </span>
+                <label htmlFor="address">
+                  Address
+                </label>
 
                 <textarea
                   id="address"
                   name="address"
-                  placeholder="Enter your address"
                   value={formData.address}
                   onChange={handleChange}
-                  required
+                  placeholder="Enter your address"
                   maxLength={400}
+                  rows={4}
+                  required
                 />
 
               </div>
 
+              <button
+                type="submit"
+                className="btn btn-primary auth-submit"
+                disabled={loading}
+              >
+                {loading
+                  ? "Creating Account..."
+                  : "Create Account"}
+              </button>
+
+            </form>
+
+            <div className="auth-switch">
+
+              <span>
+                Already have an account?
+              </span>
+
+              <Link to="/login">
+                Sign In
+              </Link>
+
             </div>
 
-            {/* Submit */}
-            <button
-              type="submit"
-              className="login-button"
-              disabled={loading}
+            <Link
+              to="/"
+              className="auth-back-link"
             >
-              {loading ? (
-                "Creating Account..."
-              ) : (
-                <>
-                  Create Account
-                  <span>→</span>
-                </>
-              )}
-            </button>
+              ← Back to Home
+            </Link>
 
-          </form>
-
-          <div className="login-divider">
-            <span>ALREADY HAVE AN ACCOUNT?</span>
           </div>
 
-          <button
-            type="button"
-            className="register-button"
-            onClick={() => navigate("/login")}
-          >
-            Sign In
-          </button>
-
-          <button
-            type="button"
-            className="back-home"
-            onClick={() => navigate("/")}
-          >
-            ← Back to Home
-          </button>
-
-        </div>
+        </section>
 
       </div>
 
     </div>
   );
-};
+}
 
 export default Register;

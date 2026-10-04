@@ -1,49 +1,161 @@
-# Store_Rating_Management_System
-Developed a full-stack Store Rating Management System using React.js, Express.js, and MySQL.   Implemented role-based access for Admin, Store Owner, and Users with store and rating management.   Users can rate stores, while owners and admins can monitor and manage ratings through dashboards.
 # Store Rating Management System
 
-A full-stack Web application for managing stores, users, and customer ratings through a centralized platform.
-
-## Tech Stack
-
-- **Frontend:** React.js
-- **Backend:** Express.js, Node.js
-- **Database:** MySQL
-- **API:** RESTful APIs
+A full-stack web application that allows users to discover stores, submit ratings, and manage their ratings. The system also provides role-based dashboards for **System Administrators** and **Store Owners** to manage users, stores, and rating-related information.
 
 ## Features
 
+### User
 - User registration and login
+- Secure authentication using JWT
+- View available stores
+- Search and browse stores
+- Submit ratings from 1 to 5
+- Update existing ratings
+- View personal rating information
+
+### Store Owner
+- Secure owner login
+- View owned store information
+- View ratings submitted by users
+- View average store rating
+- Monitor customer ratings
+
+### System Administrator
+- Secure administrator login
+- Manage users
+- Create and manage stores
+- View store information
+- View registered users
+- Manage system data
 - Role-based access control
-- Admin, Store Owner, and User roles
-- Store listing and management
-- Submit and update store ratings
-- Average store rating calculation
-- Store owner dashboard
-- Admin dashboard
-- User and rating management
-- MySQL database integration
+
+## Tech Stack
+
+### Frontend
+- React.js
+- HTML5
+- CSS3
+- JavaScript
+
+### Backend
+- Node.js
+- Express.js
+- REST API
+- JWT Authentication
+
+### Database
+- MySQL
+
+### Development Tools
+- Git
+- GitHub
+- VS Code
+- npm
 
 ## Project Structure
 
 ```text
-store-rating-management/
+Store_Rating_Management_System/
+│
 ├── frontend/
 │   ├── src/
+│   ├── public/
 │   └── package.json
 │
 ├── backend/
-│   ├── routes/
 │   ├── controllers/
-│   ├── models/
+│   ├── routes/
 │   ├── middleware/
 │   ├── config/
-│   └── server.js
+│   ├── server.js
+│   ├── .env
+│   └── package.json
 │
 ├── database/
-│   └── schema.sql
+│   ├── database.sql
+│   ├── users.sql
+│   ├── stores.sql
+│   └── ratings.sql
 │
 └── README.md
+```
+
+## Database Design
+
+The application uses three main tables:
+
+### Users
+
+Stores information about system users.
+
+Important fields:
+
+```text
+id
+name
+email
+password
+address
+role
+created_at
+updated_at
+```
+
+Supported roles:
+
+```text
+admin
+owner
+user
+```
+
+### Stores
+
+Stores information about registered stores.
+
+```text
+id
+name
+email
+address
+owner_id
+created_at
+updated_at
+```
+
+`owner_id` establishes a relationship between a store and its owner.
+
+### Ratings
+
+Stores ratings submitted by users.
+
+```text
+id
+user_id
+store_id
+rating
+created_at
+updated_at
+```
+
+Ratings are restricted to values between **1 and 5**.
+
+A user can submit only one rating for a particular store and can update the existing rating.
+
+## Database Relationships
+
+```text
+Users
+  │
+  ├───────────────┐
+  │               │
+  │ owner_id      │ user_id
+  ▼               ▼
+Stores         Ratings
+                  │
+                  │ store_id
+                  ▼
+                Stores
 ```
 
 ## Installation
@@ -51,79 +163,69 @@ store-rating-management/
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
-cd store-rating-management
+git clone <your-github-repository-url>
+cd Store_Rating_Management_System
 ```
 
-### 2. Install Frontend Dependencies
+### 2. Backend Setup
 
-```bash
-cd frontend
-npm install
-```
-
-### 3. Install Backend Dependencies
-
-```bash
-cd ../backend
-npm install
-```
-
-### 4. Configure Environment Variables
-
-Create a `.env` file inside the backend folder:
-
-```env
-PORT=5000
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_password
-DB_NAME=store_rating_db
-```
-
-### 5. Setup MySQL Database
-
-Create the database:
-
-```sql
-CREATE DATABASE store_rating_db;
-```
-
-Then import or execute the SQL schema provided in the `database` folder.
-
-### 6. Start the Backend
+Navigate to the backend directory:
 
 ```bash
 cd backend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file:
+
+```env
+PORT=5000
+
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_NAME=store_rating_db
+
+JWT_SECRET=your_secret_key
+```
+
+Update the database credentials according to your MySQL configuration.
+
+### 3. Database Setup
+
+Open MySQL and create/import the database using:
+
+```text
+database/database.sql
+```
+
+The database will contain:
+
+- `users`
+- `stores`
+- `ratings`
+
+### 4. Start the Backend
+
+```bash
 npm run dev
 ```
 
-### 7. Start the Frontend
+The backend server will run on:
+
+```text
+http://localhost:5000
+```
+
+### 5. Frontend Setup
 
 Open another terminal:
 
 ```bash
 cd frontend
-npm run dev
 ```
-
-## User Roles
-
-### Admin
-- Manage users
-- Add, update, and delete stores
-- Monitor ratings
-- Manage the overall platform
-
-### Store Owner
-- View store details
-- Monitor customer ratings
-- View average store rating
-- Manage store-related information
-
-### User
-- Browse stores
-- Search for stores
-- Submit ratings
-- Update ratings
-- View

@@ -1,0 +1,341 @@
+STORE RATING MANAGEMENT SYSTEM
+PROJECT PLANNING
+
+1. PROJECT OBJECTIVE
+--------------------
+The objective of this project is to develop a full-stack Store Rating Management System where users can view stores and submit ratings, store owners can monitor ratings for their stores, and administrators can manage users and stores.
+
+The system will provide secure authentication, role-based authorization, store management, and rating management.
+
+2. TECHNOLOGY STACK
+-------------------
+Frontend:
+- React.js
+- JavaScript
+- HTML5
+- CSS3
+
+Backend:
+- Node.js
+- Express.js
+- REST APIs
+- JWT Authentication
+
+Database:
+- MySQL
+
+Tools:
+- Git
+- GitHub
+- VS Code
+- npm
+
+
+3. USER ROLES
+-------------
+The application will have three types of users:
+
+A. SYSTEM ADMINISTRATOR
+- Login securely
+- View and manage users
+- Create and manage stores
+- View store information
+- View user information
+- Access administrator dashboard
+
+B. STORE OWNER
+- Login securely
+- View owned store
+- View ratings received by the store
+- View average store rating
+- Monitor customer ratings
+
+C. NORMAL USER
+- Register and login
+- View available stores
+- Search/browse stores
+- Submit a rating from 1 to 5
+- Update an existing rating
+- View rating information
+
+
+4. MAIN MODULES
+---------------
+The project will be divided into the following modules:
+
+1. Authentication Module
+   - User registration
+   - User login
+   - Password hashing
+   - JWT token generation
+   - Authentication middleware
+
+2. User Management Module
+   - Create users
+   - View users
+   - Manage user roles
+   - View user details
+
+3. Store Management Module
+   - Create stores
+   - View stores
+   - Assign stores to owners
+   - Manage store information
+
+4. Rating Management Module
+   - Submit ratings
+   - Update ratings
+   - View ratings
+   - Calculate average store rating
+
+5. Authorization Module
+   - Role-based access control
+   - Protect admin routes
+   - Protect owner routes
+   - Protect user routes
+
+
+5. DATABASE PLANNING
+--------------------
+The database will be named:
+
+store_rating_db
+
+The main tables will be:
+
+A. users
+- id
+- name
+- email
+- password
+- address
+- role
+- created_at
+- updated_at
+
+B. stores
+- id
+- name
+- email
+- address
+- owner_id
+- created_at
+- updated_at
+
+C. ratings
+- id
+- user_id
+- store_id
+- rating
+- created_at
+- updated_at
+
+Relationships:
+
+- One owner can own one or more stores.
+- One user can submit ratings for multiple stores.
+- One store can receive ratings from multiple users.
+- A user can have only one rating for a particular store.
+- Ratings will be restricted to values from 1 to 5.
+
+
+6. BACKEND PLANNING
+-------------------
+The backend will follow a modular structure.
+
+Controllers:
+- Authentication controller
+- Admin controller
+- Store controller
+- Rating controller
+
+Routes:
+- Authentication routes
+- Admin routes
+- Store routes
+- Rating routes
+
+Middleware:
+- JWT authentication middleware
+- Role authorization middleware
+
+The backend will communicate with the MySQL database using SQL queries.
+
+
+7. FRONTEND PLANNING
+--------------------
+The frontend will be developed using React.js.
+
+Main pages/components:
+
+- Login page
+- Registration page
+- Admin dashboard
+- Owner dashboard
+- User dashboard
+- Store listing
+- Store details
+- Rating form
+- User management
+- Store management
+- Navigation/header
+- Protected routes
+
+The frontend will communicate with the Express backend through REST APIs.
+
+
+8. AUTHENTICATION FLOW
+----------------------
+1. User enters email and password.
+2. Backend validates the credentials.
+3. Password is verified against the stored hashed password.
+4. Backend generates a JWT token.
+5. Token is returned to the frontend.
+6. Frontend stores the authentication information.
+7. Protected API requests include the JWT token.
+8. Backend verifies the token before allowing access.
+
+
+9. RATING FLOW
+--------------
+1. User logs into the system.
+2. User views available stores.
+3. User selects a store.
+4. User submits a rating from 1 to 5.
+5. Backend validates the rating.
+6. Rating is stored in the ratings table.
+7. Store's rating information is displayed.
+8. If the user has already rated the store, the existing rating can be updated.
+
+
+10. DEVELOPMENT PLAN
+--------------------
+Phase 1:
+- Analyze assignment requirements
+- Finalize features
+- Design database structure
+
+Phase 2:
+- Create MySQL database
+- Create users, stores, and ratings tables
+- Establish table relationships
+
+Phase 3:
+- Set up Node.js and Express.js backend
+- Configure environment variables
+- Connect backend with MySQL
+
+Phase 4:
+- Implement registration and login
+- Implement JWT authentication
+- Implement role-based authorization
+
+Phase 5:
+- Implement admin APIs
+- Implement store management APIs
+- Implement rating APIs
+
+Phase 6:
+- Develop React frontend
+- Create login and registration pages
+- Create role-based dashboards
+- Connect frontend with backend APIs
+
+Phase 7:
+- Test authentication
+- Test authorization
+- Test store management
+- Test rating functionality
+- Fix bugs and validation issues
+
+Phase 8:
+- Final UI improvements
+- Code cleanup
+- Documentation
+- GitHub repository submission
+
+
+11. TESTING PLAN
+---------------
+The following functionality will be tested:
+
+Authentication:
+- Valid registration
+- Duplicate email registration
+- Valid login
+- Invalid login
+- JWT authentication
+
+Authorization:
+- Admin access
+- Owner access
+- User access
+- Unauthorized route access
+
+Users:
+- Create user
+- View users
+- View user details
+
+Stores:
+- Create store
+- View stores
+- Assign store owner
+- View store details
+
+Ratings:
+- Submit rating
+- Update rating
+- Rating validation from 1 to 5
+- Prevent duplicate rating for the same user and store
+
+Database:
+- Foreign key relationships
+- Unique constraints
+- Data validation
+
+
+12. SECURITY PLAN
+-----------------
+The application will implement:
+
+- Password hashing
+- JWT authentication
+- Role-based authorization
+- Protected routes
+- Input validation
+- Environment variables for sensitive information
+- Database constraints
+- Unique email validation
+- Rating validation
+
+
+13. EXPECTED RESULT
+-------------------
+The final system will provide a functional web-based Store Rating Management System with:
+
+- Secure user authentication
+- Three user roles
+- Admin dashboard
+- Store owner dashboard
+- User dashboard
+- Store management
+- Rating management
+- MySQL database
+- REST APIs
+- Role-based access control
+
+The application should be easy to use, secure, maintainable, and suitable for academic assignment evaluation.
+
+
+14. PROJECT DELIVERABLES
+------------------------
+The final submission will contain:
+
+- React frontend source code
+- Node.js/Express backend source code
+- MySQL database scripts
+- planning.txt
+- README.md
+- GitHub repository
+- Required screenshots/demo if requested by the evaluator
