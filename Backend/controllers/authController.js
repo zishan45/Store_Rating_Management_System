@@ -2,11 +2,17 @@ const pool = require("../config/db");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const {
+  validateEmail,
+  validateName,
+  validateAddress,
+  validatePassword,
+} = require("../utils/validators");
+
 const register = async (req, res) => {
   try {
     const { name, email, address, password } = req.body;
 
-    // Check required fields
     if (!name || !email || !address || !password) {
       return res.status(400).json({
         success: false,
@@ -14,7 +20,35 @@ const register = async (req, res) => {
       });
     }
 
-    // Check whether email already exists
+    if (!validateName(name)) {
+      return res.status(400).json({
+        success: false,
+        message: "Name must be between 20 and 60 characters",
+      });
+    }
+
+    if (!validateEmail(email)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please enter a valid email address",
+      });
+    }
+
+    if (!validateAddress(address)) {
+      return res.status(400).json({
+        success: false,
+        message: "Address must not exceed 400 characters",
+      });
+    }
+
+    if (!validatePassword(password)) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Password must be 8-16 characters and contain at least one uppercase letter and one special character",
+      });
+    }
+
     const [existingUser] = await pool.query(
       "SELECT id FROM users WHERE email = ?",
       [email]
@@ -27,12 +61,11 @@ const register = async (req, res) => {
       });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create normal user
     const [result] = await pool.query(
-      `INSERT INTO users (name, email, password, address, role)
+      `INSERT INTO users
+       (name, email, password, address, role)
        VALUES (?, ?, ?, ?, 'user')`,
       [name, email, hashedPassword, address]
     );
@@ -42,6 +75,7 @@ const register = async (req, res) => {
       message: "User registered successfully",
       userId: result.insertId,
     });
+
   } catch (error) {
     console.error("REGISTER ERROR:", error);
 
